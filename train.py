@@ -52,7 +52,7 @@ image_tensor, orig_img_tensor, annotation_tensor = tf.cond(is_training_placehold
 
 feed_dict_to_use = {is_training_placeholder: True}
 
-upsample_factor = 16
+upsample_factor = 8
 number_of_classes = 21
 
 log_folder = os.path.join(FLAGS.output_dir, 'train')
