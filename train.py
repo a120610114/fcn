@@ -105,14 +105,7 @@ upsampled_logits = tf.nn.conv2d_transpose(logits, upsample_filter_tensor_x2,
 
 
 upsampled_logits = upsampled_logits + aux_logits_16s
-upsample_filter_np_x16 = bilinear_upsample_weights(16,
-                                                   number_of_classes)
 
-upsample_filter_tensor_x16 = tf.Variable(upsample_filter_np_x16, name='vgg_16/fc8/t_conv_x16')
-upsampled_logits = tf.nn.conv2d_transpose(upsampled_logits, upsample_filter_tensor_x16,
-                                          output_shape=upsampled_logits_shape,
-                                          strides=[1, 16, upsample_factor, 1],
-                                          padding='SAME'
 # fcn_8scode stard
 pool3_feature = end_points['vgg_16/pool3']
 with tf.variable_scope('vgg_16/fc8'):
