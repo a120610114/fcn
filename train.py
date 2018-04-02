@@ -113,6 +113,17 @@ with tf.variable_scope('vgg_16/fc8'):
                                  activation_fn=None,
                                  weights_initializer=tf.zeros_initializer,
                                  scope='conv_pool3')
+    
+# Perform the upsampling
+upsample_filter_np_x2 = bilinear_upsample_weights(2,  # upsample_factor,
+                                                  number_of_classes)
+
+upsample_filter_tensor_x2 = tf.Variable(upsample_filter_np_x2, name='vgg_16/fc8/t_conv_x2')
+
+upsampled_logits = tf.nn.conv2d_transpose(upsampled_logits, upsample_filter_tensor_x2,
+                                          output_shape=tf.shape(aux_logits_8s),
+                                          strides=[1, 2, 2, 1],
+                                          padding='SAME')
 
 upsampled_logits = upsampled_logits + aux_logits_8s
 
